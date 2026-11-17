@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Polítiques que declara l'administrador. Un Device Owner no en necessita cap de concreta. -->
+<device-admin>
+    <uses-policies />
+</device-admin>

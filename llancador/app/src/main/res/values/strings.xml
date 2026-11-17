@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Llancador</string>
+    <string name="app_name">Llançador</string>
+    <string name="salutacio">Hola!</string>
+    <string name="estat_propietari_si">Aquest mòbil està gestionat (Device Owner actiu).</string>
+    <string name="estat_propietari_no">Aquest mòbil encara no està gestionat.</string>
+    <string name="boto_treure_propietari">Proves: deixar de gestionar el mòbil</string>
 </resources>
