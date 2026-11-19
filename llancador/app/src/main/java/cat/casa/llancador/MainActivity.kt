@@ -26,7 +26,7 @@ import androidx.core.view.WindowInsetsCompat
  * permeses: Telèfon (llista de contactes) i Llanterna.
  *
  * Com a Device Owner, en mostrar-se aplica les normes del mòbil (inici fixat,
- * panell de dalt tancat) i, si cal, demana el paper de filtre de trucades.
+ * panell de dalt limitat) i, si cal, demana el paper de filtre de trucades.
  *
  * En versions de desenvolupament, a baix surt l'estat i un botó per deixar
  * de ser Device Owner (per provar a l'emulador sense resetejar-lo).
