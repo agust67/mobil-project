@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Fons de pantalla provisional: taques de color sobre negre.
+    Més endavant el nen el triarà d'una galeria de fons aprovats.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FF07040F" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.15"
+                android:centerY="0.2"
+                android:endColor="#00FF2E88"
+                android:gradientRadius="75%p"
+                android:startColor="#CCFF2E88"
+                android:type="radial" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.9"
+                android:centerY="0.45"
+                android:endColor="#0000E5FF"
+                android:gradientRadius="70%p"
+                android:startColor="#B300E5FF"
+                android:type="radial" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.3"
+                android:centerY="0.8"
+                android:endColor="#00FFB000"
+                android:gradientRadius="65%p"
+                android:startColor="#B3FFB000"
+                android:type="radial" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="0.85"
+                android:centerY="0.95"
+                android:endColor="#007C3AED"
+                android:gradientRadius="60%p"
+                android:startColor="#CC7C3AED"
+                android:type="radial" />
+        </shape>
+    </item>
+</layer-list>

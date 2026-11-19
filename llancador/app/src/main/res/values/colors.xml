@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Fons de les pantalles de llista (Contactes...). -->
+    <color name="fons_llista">#FF101018</color>
 </resources>
