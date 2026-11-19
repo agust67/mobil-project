@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text blanc amb ombra, perquè es llegeixi sobre qualsevol fons de pantalla. -->
+    <style name="TextSobreFons">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:shadowColor">#B3000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">6</item>
+    </style>
+</resources>

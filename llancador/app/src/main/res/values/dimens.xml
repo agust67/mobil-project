@@ -1,3 +1,4 @@
 <resources>
-    <dimen name="separacio_botons">12dp</dimen>
+    <dimen name="mida_icona_app">64dp</dimen>
+    <dimen name="mida_boto_rodo">52dp</dimen>
 </resources>

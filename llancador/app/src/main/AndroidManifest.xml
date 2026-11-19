@@ -35,6 +35,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Pantalla Telèfon: llista de contactes permesos. -->
+        <activity
+            android:name=".ContactesActivity"
+            android:exported="false" />
+
         <!-- Receptor d'administrador: el que fa que l'app pugui ser Device Owner. -->
         <receiver
             android:name=".AdministradorDispositiu"
