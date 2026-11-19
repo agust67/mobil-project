@@ -21,6 +21,8 @@ import androidx.core.view.WindowInsetsCompat
  * Fons de color, hora i data a dalt, i una graella d'icones amb les apps
  * permeses. De moment només hi ha Telèfon, que obre la llista de contactes.
  *
+ * Com a Device Owner, aquesta pantalla queda fixada com a inici del mòbil.
+ *
  * En versions de desenvolupament, a baix surt l'estat del Device Owner i un
  * botó per deixar de ser-ho (per provar a l'emulador sense resetejar-lo).
  */
@@ -59,6 +61,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Cada vegada que es mostra l'inici, ens assegurem que segueix fixat.
+        AdministradorDispositiu.fixarComInici(this)
         mostrarEstat()
     }
 
@@ -80,6 +84,7 @@ class MainActivity : AppCompatActivity() {
     /** Només per a proves: deixa de ser Device Owner sense resetejar el mòbil. */
     @Suppress("DEPRECATION")
     private fun deixarDeSerPropietari() {
+        AdministradorDispositiu.desfixarInici(this)
         getSystemService(DevicePolicyManager::class.java).clearDeviceOwnerApp(packageName)
         mostrarEstat()
     }
