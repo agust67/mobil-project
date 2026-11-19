@@ -4,7 +4,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp"
     tools:context=".MainActivity">
@@ -13,24 +12,42 @@
         android:id="@+id/text_salutacio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
         android:text="@string/salutacio"
         android:textSize="32sp"
         android:textStyle="bold" />
+
+    <!-- Aquí s'afegeix un botó per a cada contacte permès. -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/contenidor_contactes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
     <TextView
         android:id="@+id/text_estat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="14sp"
         tools:text="@string/estat_propietari_no" />
 
     <Button
         android:id="@+id/boto_treure_propietari"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:text="@string/boto_treure_propietari"
         android:visibility="gone" />
 

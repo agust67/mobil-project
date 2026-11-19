@@ -1,0 +1,7 @@
+{
+  "contactes": [
+    { "nom": "Papa", "telefon": "+34600000001" },
+    { "nom": "Mama", "telefon": "+34600000002" },
+    { "nom": "Avis", "telefon": "+34600000003" }
+  ]
+}

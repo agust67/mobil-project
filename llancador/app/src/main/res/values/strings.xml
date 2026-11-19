@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Llançador</string>
     <string name="salutacio">Hola!</string>
+    <string name="boto_trucar">Trucar a %1$s</string>
+    <string name="sense_contactes">No hi ha cap contacte configurat.</string>
+    <string name="sense_permis_trucar">No es pot trucar: falta el permís de trucades.</string>
     <string name="estat_propietari_si">Aquest mòbil està gestionat (Device Owner actiu).</string>
     <string name="estat_propietari_no">Aquest mòbil encara no està gestionat.</string>
     <string name="boto_treure_propietari">Proves: deixar de gestionar el mòbil</string>
