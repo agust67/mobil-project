@@ -40,6 +40,16 @@
             android:name=".ContactesActivity"
             android:exported="false" />
 
+        <!-- Filtre de trucades entrants: penja les que no són de contactes permesos. -->
+        <service
+            android:name=".FiltreTrucades"
+            android:exported="true"
+            android:permission="android.permission.BIND_SCREENING_SERVICE">
+            <intent-filter>
+                <action android:name="android.telecom.CallScreeningService" />
+            </intent-filter>
+        </service>
+
         <!-- Receptor d'administrador: el que fa que l'app pugui ser Device Owner. -->
         <receiver
             android:name=".AdministradorDispositiu"

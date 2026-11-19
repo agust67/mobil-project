@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fons de la icona Llanterna encesa: quadrat arrodonit groc. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="18dp" />
+    <gradient
+        android:angle="270"
+        android:endColor="#FFF5A300"
+        android:startColor="#FFFFD54A" />
+</shape>
