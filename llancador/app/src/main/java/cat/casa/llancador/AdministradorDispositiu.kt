@@ -1,5 +1,6 @@
 package cat.casa.llancador
 
+import android.app.ActivityManager
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -7,7 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.UserManager
+import android.provider.AlarmClock
+import android.provider.MediaStore
+import android.telecom.TelecomManager
 
 /**
  * Receptor d'administrador del dispositiu.
@@ -43,9 +48,9 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
         /**
          * Si som Device Owner, aplica les normes del mòbil:
          * - el Llançador és sempre la pantalla d'inici (no es pot canviar);
-         * - el panell de dalt queda obert (perquè es vegin les trucades), però no s'hi pot
-         *   canviar la wifi, les dades mòbils, el Bluetooth ni el mode avió;
-         * - l'app d'Ajustos queda bloquejada (la roda del panell mostra un avís);
+         * - no es pot canviar la wifi, les dades mòbils, el Bluetooth ni el mode avió;
+         * - mode quiosc: només s'obren les apps permeses (Ajustos no); el panell ràpid
+         *   desapareix però les notificacions i les trucades entrants es veuen;
          * - l'hora és automàtica i no es pot canviar (perquè el mode nit no es pugui saltar);
          * - no es pot fer reset de fàbrica des d'Ajustos, ni afegir usuaris, ni arrencar en
          *   mode segur, ni fer servir memòries USB;
@@ -71,12 +76,9 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
 
             for (restriccio in restriccions(context)) gestor.addUserRestriction(admin, restriccio)
             gestor.setAutoTimeEnabled(admin, true)
-            // Ajustos: primer provem d'amagar-los; si el sistema no ho permet, els suspenem
-            // (en obrir-los surt un avís en lloc de l'app).
-            gestor.setShortSupportMessage(admin, context.getString(R.string.avis_bloquejat))
-            for (paquet in APPS_BLOQUEJADES) gestor.setApplicationHidden(admin, paquet, true)
-            appsSenseBloquejar = gestor.setPackagesSuspended(admin, APPS_BLOQUEJADES.toTypedArray(), true)
-                .toList()
+            // Mode quiosc: només es poden obrir les apps de la llista (Ajustos no hi és).
+            gestor.setLockTaskPackages(admin, paquetsQuiosc(context).toTypedArray())
+            gestor.setLockTaskFeatures(admin, FUNCIONS_QUIOSC)
             return true
         }
 
@@ -89,14 +91,40 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
             for (restriccio in RESTRICCIONS + RESTRICCIONS_DEFINITIVA) {
                 gestor.clearUserRestriction(admin, restriccio)
             }
-            gestor.setPackagesSuspended(admin, APPS_BLOQUEJADES.toTypedArray(), false)
-            for (paquet in APPS_BLOQUEJADES) gestor.setApplicationHidden(admin, paquet, false)
-            gestor.setShortSupportMessage(admin, null)
+            gestor.setLockTaskPackages(admin, emptyArray())
+            gestor.setLockTaskFeatures(admin, DevicePolicyManager.LOCK_TASK_FEATURE_NONE)
         }
 
-        /** Apps que no s'han pogut bloquejar l'última vegada (per a la línia de proves). */
-        var appsSenseBloquejar: List<String> = emptyList()
-            private set
+        /**
+         * Apps que es poden obrir en mode quiosc: el Llançador, l'app de trucades
+         * (per veure i contestar trucades), el rellotge, la calculadora, la càmera i
+         * el gestor de permisos (per si una d'aquestes apps demana un permís).
+         */
+        private fun paquetsQuiosc(context: Context): Set<String> {
+            val gestorPaquets = context.packageManager
+            val telecom = context.getSystemService(TelecomManager::class.java)
+            val intencions = listOf(
+                Intent(Intent.ACTION_DIAL),
+                Intent(AlarmClock.ACTION_SHOW_ALARMS),
+                Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALCULATOR),
+                Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA),
+                Intent(PackageManager.ACTION_REQUEST_PERMISSIONS)
+            )
+            return buildSet {
+                add(context.packageName)
+                telecom.defaultDialerPackage?.let { add(it) }
+                telecom.systemDialerPackage?.let { add(it) }
+                for (intencio in intencions) {
+                    gestorPaquets.resolveActivity(intencio, PackageManager.MATCH_DEFAULT_ONLY)
+                        ?.activityInfo?.packageName?.let { add(it) }
+                }
+            }
+        }
+
+        /** Cert si el mòbil està en mode quiosc ara mateix. */
+        fun enModeQuiosc(context: Context): Boolean =
+            context.getSystemService(ActivityManager::class.java).lockTaskModeState ==
+                ActivityManager.LOCK_TASK_MODE_LOCKED
 
         /**
          * Si som Device Owner, ens concedim el permís indicat nosaltres mateixos.
@@ -139,9 +167,16 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
             UserManager.DISALLOW_DEBUGGING_FEATURES
         )
 
-        /** Apps del sistema que el nen no ha de poder obrir. */
-        private val APPS_BLOQUEJADES = listOf(
-            "com.android.settings"  // Ajustos
-        )
+        /**
+         * Què queda actiu en mode quiosc: la barra de dalt amb hora i bateria, les
+         * notificacions (perquè es vegin les trucades entrants), el botó d'inici,
+         * el menú d'apagar i la pantalla de bloqueig. El panell ràpid i Recents, no.
+         */
+        private const val FUNCIONS_QUIOSC =
+            DevicePolicyManager.LOCK_TASK_FEATURE_SYSTEM_INFO or
+                DevicePolicyManager.LOCK_TASK_FEATURE_NOTIFICATIONS or
+                DevicePolicyManager.LOCK_TASK_FEATURE_HOME or
+                DevicePolicyManager.LOCK_TASK_FEATURE_GLOBAL_ACTIONS or
+                DevicePolicyManager.LOCK_TASK_FEATURE_KEYGUARD
     }
 }

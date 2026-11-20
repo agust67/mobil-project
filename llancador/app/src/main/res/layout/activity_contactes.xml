@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Pantalla Telèfon: llista de contactes permesos. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contactes"
     android:layout_width="match_parent"
@@ -19,6 +20,25 @@
         android:textColor="@android:color/white"
         android:textSize="34sp"
         android:textStyle="bold" />
+
+    <!-- Emergència: sempre a dalt, a qualsevol hora. -->
+    <TextView
+        android:id="@+id/boto_112"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fons_boto_112"
+        android:clickable="true"
+        android:drawablePadding="10dp"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:text="@string/boto_112"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_emergencia" />
 
     <ScrollView
         android:layout_width="match_parent"

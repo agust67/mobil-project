@@ -14,7 +14,7 @@
     <string name="mode_nit_fins">Mode nit fins a les %1$s</string>
 
     <!-- Emergència -->
-    <string name="tile_112">112</string>
+    <string name="boto_112">112 · Emergència</string>
     <string name="emergencia_titol">Emergència</string>
     <string name="emergencia_pregunta">Vols trucar al 112?</string>
     <string name="emergencia_trucar">Trucar</string>
@@ -37,10 +37,9 @@
     <string name="cf_nit_titol">Mode nit</string>
     <string name="cf_nit_text">De %1$s a %2$s el mòbil descansa: només pots fer servir el Telèfon, la Llanterna i el Rellotge, i només pots parlar amb: %3$s.</string>
     <string name="cf_apps_titol">Apps</string>
-    <string name="cf_apps_text">Només hi ha les apps de la pantalla d\'inici. No es poden instal·lar apps noves ni canviar els ajustos del mòbil (wifi, dades, Bluetooth, hora).</string>
+    <string name="cf_apps_text">Només hi ha les apps de la pantalla d\'inici. No es poden obrir altres apps, ni instal·lar-ne de noves, ni canviar els ajustos del mòbil (wifi, dades, Bluetooth, hora).</string>
     <string name="cf_emergencia_titol">Emergències</string>
-    <string name="cf_emergencia_text">Si llisques des de dalt de la pantalla, hi ha el botó 112. Funciona sempre, a qualsevol hora, fins i tot amb el mòbil bloquejat. Fes-lo servir només si hi ha una emergència de veritat.</string>
-    <string name="avis_bloquejat">Aquesta opció la controlen els teus pares.</string>
+    <string name="cf_emergencia_text">A la pantalla Telèfon, a dalt de tot, hi ha el botó vermell del 112. Funciona sempre, a qualsevol hora, fins i tot amb el mòbil bloquejat. Fes-lo servir només si hi ha una emergència de veritat.</string>
     <string name="cf_ubicacio_titol">Ubicació</string>
     <string name="cf_ubicacio_text">La teva família pot saber on és el mòbil, per si et passa alguna cosa.</string>
     <string name="cf_normes_titol">Si vols canviar alguna cosa</string>
@@ -48,8 +47,8 @@
 
     <!-- Només per a proves -->
     <string name="estat_proves">Proves: %1$s · %2$s · %3$s · %4$s</string>
-    <string name="estat_ajustos_si">Ajustos bloquejats</string>
-    <string name="estat_ajustos_no">Ajustos oberts</string>
+    <string name="estat_quiosc_si">quiosc actiu</string>
+    <string name="estat_quiosc_no">quiosc inactiu</string>
     <string name="estat_propietari_si">mòbil gestionat</string>
     <string name="estat_propietari_no">mòbil no gestionat</string>
     <string name="estat_filtre_si">filtre entrants actiu</string>

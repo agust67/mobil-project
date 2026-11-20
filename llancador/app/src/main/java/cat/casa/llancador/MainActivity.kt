@@ -1,13 +1,10 @@
 package cat.casa.llancador
 
-import android.app.StatusBarManager
 import android.app.admin.DevicePolicyManager
 import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
-import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -33,11 +30,11 @@ import androidx.core.view.WindowInsetsCompat
  *
  * Fons de color, hora i data a dalt, i a baix les apps permeses per la
  * configuració (en files de quatre) i l'enllaç a «Com funciona el meu mòbil».
- * Al mode nit només queden les apps de nit. El 112 és al panell de dalt (Tile112).
+ * Al mode nit només queden les apps de nit. El 112 és a la pantalla Telèfon.
  *
  * Com a Device Owner, en mostrar-se aplica les normes del mòbil i, si cal,
- * demana els papers de filtre de trucades entrants i sortints, i afegir el
- * botó 112 al panell de dalt.
+ * demana els papers de filtre de trucades entrants i sortints. Quan els té,
+ * entra en mode quiosc.
  *
  * En versions de desenvolupament, a baix surt l'estat i botons de proves.
  */
@@ -86,9 +83,6 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-
-    /** Si ja hem demanat afegir el botó 112 al panell en aquesta sessió. */
-    private var tile112Demanat = false
 
     /** Papers que demanem una vegada per sessió, per ordre, si encara no els tenim. */
     private val rolsDemanats = mutableSetOf<String>()
@@ -232,7 +226,7 @@ class MainActivity : AppCompatActivity() {
             it !in rolsDemanats && rols.isRoleAvailable(it) && !rols.isRoleHeld(it)
         }
         if (pendent == null) {
-            demanarTile112SiCal()
+            entrarModeQuiosc()
             return
         }
         rolsDemanats.add(pendent)
@@ -240,29 +234,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Demana al sistema afegir el botó 112 al panell de dalt. Si ja hi és, no surt res.
-     * Ho demanem una vegada per sessió fins que s'accepti.
+     * Mode quiosc: quan ja tenim els papers de trucades, fixem el Llançador i les
+     * apps permeses. A partir d'aquí no es pot obrir cap altra app (ni Ajustos).
      */
-    private fun demanarTile112SiCal() {
-        if (tile112Demanat || tile112Afegit()) return
-        tile112Demanat = true
-        getSystemService(StatusBarManager::class.java).requestAddTileService(
-            ComponentName(this, Tile112::class.java),
-            getString(R.string.tile_112),
-            Icon.createWithResource(this, R.drawable.ic_emergencia),
-            mainExecutor
-        ) { resultat ->
-            if (resultat == StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ADDED ||
-                resultat == StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ALREADY_ADDED
-            ) {
-                preferencies().edit().putBoolean(CLAU_TILE_112, true).apply()
-            }
+    private fun entrarModeQuiosc() {
+        if (!AdministradorDispositiu.somPropietaris(this)) return
+        if (AdministradorDispositiu.enModeQuiosc(this)) return
+        if (getSystemService(DevicePolicyManager::class.java).isLockTaskPermitted(packageName)) {
+            startLockTask()
         }
     }
-
-    private fun preferencies() = getSharedPreferences("llancador", MODE_PRIVATE)
-
-    private fun tile112Afegit(): Boolean = preferencies().getBoolean(CLAU_TILE_112, false)
 
     private fun tenimRol(rol: String): Boolean =
         getSystemService(RoleManager::class.java).isRoleHeld(rol)
@@ -287,11 +268,8 @@ class MainActivity : AppCompatActivity() {
                 else R.string.estat_sortints_no
             ),
             getString(
-                if (somPropietaris && AdministradorDispositiu.appsSenseBloquejar.isEmpty()) {
-                    R.string.estat_ajustos_si
-                } else {
-                    R.string.estat_ajustos_no
-                }
+                if (AdministradorDispositiu.enModeQuiosc(this)) R.string.estat_quiosc_si
+                else R.string.estat_quiosc_no
             )
         )
         botoTreure.visibility = if (somPropietaris) View.VISIBLE else View.GONE
@@ -307,6 +285,7 @@ class MainActivity : AppCompatActivity() {
     /** Només per a proves: desfà les normes i deixa de ser Device Owner sense resetejar el mòbil. */
     @Suppress("DEPRECATION")
     private fun deixarDeSerPropietari() {
+        if (AdministradorDispositiu.enModeQuiosc(this)) stopLockTask()
         AdministradorDispositiu.treureNormes(this)
         getSystemService(DevicePolicyManager::class.java).clearDeviceOwnerApp(packageName)
         mostrarEstat()
@@ -314,6 +293,5 @@ class MainActivity : AppCompatActivity() {
 
     private companion object {
         val ROLS = listOf(RoleManager.ROLE_CALL_SCREENING, RoleManager.ROLE_CALL_REDIRECTION)
-        const val CLAU_TILE_112 = "tile_112_afegit"
     }
 }

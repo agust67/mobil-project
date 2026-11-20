@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 
 /**
  * Finestra transparent que només mostra «Vols trucar al 112?».
- * L'obre el botó 112 del panell de dalt (Tile112). Funciona també amb el mòbil bloquejat.
+ * L'obre el botó 112 de la pantalla Telèfon.
  */
 class EmergenciaActivity : AppCompatActivity() {
 

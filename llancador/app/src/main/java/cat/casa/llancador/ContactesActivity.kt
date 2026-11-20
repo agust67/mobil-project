@@ -61,6 +61,9 @@ class ContactesActivity : AppCompatActivity() {
         }
 
         llista = findViewById(R.id.llista_contactes)
+        findViewById<TextView>(R.id.boto_112).setOnClickListener {
+            startActivity(Intent(this, EmergenciaActivity::class.java))
+        }
     }
 
     override fun onResume() {
