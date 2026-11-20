@@ -1,7 +1,13 @@
 {
   "contactes": [
-    { "nom": "Nom1", "telefon": "+34600000001" },
-    { "nom": "Nom2", "telefon": "+34600000002" },
-    { "nom": "Nom3", "telefon": "+34600000003" }
-  ]
+    { "nom": "Nom1", "telefon": "+34600000001", "grup": "familia" },
+    { "nom": "Nom2", "telefon": "+34600000002", "grup": "familia" },
+    { "nom": "Nom3", "telefon": "+34600000003", "grup": "amics" }
+  ],
+  "apps": ["telefon", "llanterna", "rellotge", "calculadora", "camera"],
+  "mode_nit": {
+    "inici": "21:00",
+    "fi": "07:00",
+    "grups_permesos": ["familia"]
+  }
 }

@@ -50,6 +50,21 @@
             </intent-filter>
         </service>
 
+        <!-- Control de trucades sortints: només als contactes disponibles (el 112 sempre). -->
+        <service
+            android:name=".ControlTrucadesSortints"
+            android:exported="true"
+            android:permission="android.permission.BIND_CALL_REDIRECTION_SERVICE">
+            <intent-filter>
+                <action android:name="android.telecom.CallRedirectionService" />
+            </intent-filter>
+        </service>
+
+        <!-- Com funciona el meu mòbil: normes explicades al nen. -->
+        <activity
+            android:name=".ComFuncionaActivity"
+            android:exported="false" />
+
         <!-- Receptor d'administrador: el que fa que l'app pugui ser Device Owner. -->
         <receiver
             android:name=".AdministradorDispositiu"

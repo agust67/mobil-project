@@ -2,13 +2,13 @@ package cat.casa.llancador
 
 import android.telecom.Call
 import android.telecom.CallScreeningService
-import android.telephony.PhoneNumberUtils
 
 /**
  * Filtre de trucades entrants.
  *
- * Android el consulta abans de fer sonar el mòbil. Si el número no és de cap
- * contacte permès (o és ocult), la trucada es penja sense sonar ni avisar.
+ * Android el consulta abans de fer sonar el mòbil. Si ara no es pot parlar amb
+ * aquest número (no és de cap contacte, és ocult, o és mode nit i el contacte
+ * no hi està permès), la trucada es penja sense sonar ni avisar.
  * Queda al registre de trucades, perquè des de casa es pugui veure qui ha trucat.
  *
  * Perquè funcioni, el Llançador ha de tenir el paper de «filtre de trucades»
@@ -17,18 +17,14 @@ import android.telephony.PhoneNumberUtils
 class FiltreTrucades : CallScreeningService() {
 
     override fun onScreenCall(detalls: Call.Details) {
-        // Les trucades que fa el nen ja estan limitades pel Llançador: no les toquem.
+        // Les sortints les controla ControlTrucadesSortints.
         if (detalls.callDirection != Call.Details.DIRECTION_INCOMING) {
             respondToCall(detalls, CallScreeningService.CallResponse.Builder().build())
             return
         }
 
         val numero = detalls.handle?.schemeSpecificPart
-        val permesa = numero != null && Configuracio.llegir(this).contactes.any { contacte ->
-            PhoneNumberUtils.areSamePhoneNumber(contacte.telefon, numero, PAIS)
-        }
-
-        val resposta = if (permesa) {
+        val resposta = if (Normes.numeroPermesAra(this, numero)) {
             CallScreeningService.CallResponse.Builder().build()
         } else {
             CallScreeningService.CallResponse.Builder()
@@ -39,10 +35,5 @@ class FiltreTrucades : CallScreeningService() {
                 .build()
         }
         respondToCall(detalls, resposta)
-    }
-
-    private companion object {
-        /** País per comparar números escrits amb o sense +34. */
-        const val PAIS = "es"
     }
 }
