@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.Llancador" parent="Base.Theme.Llancador" />
+
+    <!-- Finestra transparent: només es veu el diàleg (per al 112). -->
+    <style name="Theme.Llancador.Transparent" parent="Theme.Llancador">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

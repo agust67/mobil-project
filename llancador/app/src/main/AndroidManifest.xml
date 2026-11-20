@@ -60,6 +60,28 @@
             </intent-filter>
         </service>
 
+        <!-- Botó 112 del panell de dalt. -->
+        <service
+            android:name=".Tile112"
+            android:exported="true"
+            android:icon="@drawable/ic_emergencia"
+            android:label="@string/tile_112"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <!-- Diàleg «Vols trucar al 112?». Surt també amb el mòbil bloquejat. -->
+        <activity
+            android:name=".EmergenciaActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:showWhenLocked="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.Llancador.Transparent" />
+
         <!-- Com funciona el meu mòbil: normes explicades al nen. -->
         <activity
             android:name=".ComFuncionaActivity"

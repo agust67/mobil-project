@@ -1,13 +1,13 @@
 package cat.casa.llancador
 
-import android.Manifest
+import android.app.StatusBarManager
 import android.app.admin.DevicePolicyManager
 import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.net.Uri
+import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,9 +24,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -34,11 +32,12 @@ import androidx.core.view.WindowInsetsCompat
  * Pantalla d'inici del mòbil.
  *
  * Fons de color, hora i data a dalt, i a baix les apps permeses per la
- * configuració (en files de quatre), el botó d'emergència 112 i l'enllaç a
- * «Com funciona el meu mòbil». Al mode nit només queden les apps de nit.
+ * configuració (en files de quatre) i l'enllaç a «Com funciona el meu mòbil».
+ * Al mode nit només queden les apps de nit. El 112 és al panell de dalt (Tile112).
  *
  * Com a Device Owner, en mostrar-se aplica les normes del mòbil i, si cal,
- * demana els papers de filtre de trucades entrants i sortints.
+ * demana els papers de filtre de trucades entrants i sortints, i afegir el
+ * botó 112 al panell de dalt.
  *
  * En versions de desenvolupament, a baix surt l'estat i botons de proves.
  */
@@ -88,6 +87,9 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    /** Si ja hem demanat afegir el botó 112 al panell en aquesta sessió. */
+    private var tile112Demanat = false
+
     /** Papers que demanem una vegada per sessió, per ordre, si encara no els tenim. */
     private val rolsDemanats = mutableSetOf<String>()
     private val demanarRol =
@@ -128,7 +130,6 @@ class MainActivity : AppCompatActivity() {
 
         llanterna = Llanterna(this) { encesa -> pintarLlanterna(encesa) }
 
-        findViewById<View>(R.id.boto_112).setOnClickListener { confirmar112() }
         findViewById<View>(R.id.enllac_com_funciona).setOnClickListener {
             startActivity(Intent(this, ComFuncionaActivity::class.java))
         }
@@ -220,30 +221,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    /** Demana confirmació abans de trucar al 112, per evitar trucades sense voler. */
-    private fun confirmar112() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.emergencia_titol)
-            .setMessage(R.string.emergencia_pregunta)
-            .setPositiveButton(R.string.emergencia_trucar) { _, _ -> trucar112() }
-            .setNegativeButton(R.string.emergencia_cancellar, null)
-            .show()
-    }
-
-    /** Truca al 112. Si no tenim permís de trucar, obre el marcador amb el 112 posat. */
-    private fun trucar112() {
-        val numero = Uri.parse("tel:112")
-        val potTrucar = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) ==
-            PackageManager.PERMISSION_GRANTED ||
-            AdministradorDispositiu.concedirPermis(this, Manifest.permission.CALL_PHONE)
-        val intencio = Intent(if (potTrucar) Intent.ACTION_CALL else Intent.ACTION_DIAL, numero)
-        try {
-            startActivity(intencio)
-        } catch (e: Exception) {
-            startActivity(Intent(Intent.ACTION_DIAL, numero))
-        }
-    }
-
     /**
      * Si som Device Owner i ens falta algun paper (filtre d'entrants, control de
      * sortints), el demanem. Surt un diàleg del sistema que cal acceptar una vegada.
@@ -253,10 +230,39 @@ class MainActivity : AppCompatActivity() {
         val rols = getSystemService(RoleManager::class.java)
         val pendent = ROLS.firstOrNull {
             it !in rolsDemanats && rols.isRoleAvailable(it) && !rols.isRoleHeld(it)
-        } ?: return
+        }
+        if (pendent == null) {
+            demanarTile112SiCal()
+            return
+        }
         rolsDemanats.add(pendent)
         demanarRol.launch(rols.createRequestRoleIntent(pendent))
     }
+
+    /**
+     * Demana al sistema afegir el botó 112 al panell de dalt. Si ja hi és, no surt res.
+     * Ho demanem una vegada per sessió fins que s'accepti.
+     */
+    private fun demanarTile112SiCal() {
+        if (tile112Demanat || tile112Afegit()) return
+        tile112Demanat = true
+        getSystemService(StatusBarManager::class.java).requestAddTileService(
+            ComponentName(this, Tile112::class.java),
+            getString(R.string.tile_112),
+            Icon.createWithResource(this, R.drawable.ic_emergencia),
+            mainExecutor
+        ) { resultat ->
+            if (resultat == StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ADDED ||
+                resultat == StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ALREADY_ADDED
+            ) {
+                preferencies().edit().putBoolean(CLAU_TILE_112, true).apply()
+            }
+        }
+    }
+
+    private fun preferencies() = getSharedPreferences("llancador", MODE_PRIVATE)
+
+    private fun tile112Afegit(): Boolean = preferencies().getBoolean(CLAU_TILE_112, false)
 
     private fun tenimRol(rol: String): Boolean =
         getSystemService(RoleManager::class.java).isRoleHeld(rol)
@@ -279,6 +285,13 @@ class MainActivity : AppCompatActivity() {
             getString(
                 if (tenimRol(RoleManager.ROLE_CALL_REDIRECTION)) R.string.estat_sortints_si
                 else R.string.estat_sortints_no
+            ),
+            getString(
+                if (somPropietaris && AdministradorDispositiu.appsSenseBloquejar.isEmpty()) {
+                    R.string.estat_ajustos_si
+                } else {
+                    R.string.estat_ajustos_no
+                }
             )
         )
         botoTreure.visibility = if (somPropietaris) View.VISIBLE else View.GONE
@@ -301,5 +314,6 @@ class MainActivity : AppCompatActivity() {
 
     private companion object {
         val ROLS = listOf(RoleManager.ROLE_CALL_SCREENING, RoleManager.ROLE_CALL_REDIRECTION)
+        const val CLAU_TILE_112 = "tile_112_afegit"
     }
 }

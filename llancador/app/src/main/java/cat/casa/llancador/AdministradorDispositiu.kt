@@ -45,7 +45,7 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
          * - el Llançador és sempre la pantalla d'inici (no es pot canviar);
          * - el panell de dalt queda obert (perquè es vegin les trucades), però no s'hi pot
          *   canviar la wifi, les dades mòbils, el Bluetooth ni el mode avió;
-         * - l'app d'Ajustos queda amagada (la roda del panell no fa res);
+         * - l'app d'Ajustos queda bloquejada (la roda del panell mostra un avís);
          * - l'hora és automàtica i no es pot canviar (perquè el mode nit no es pugui saltar);
          * - no es pot fer reset de fàbrica des d'Ajustos, ni afegir usuaris, ni arrencar en
          *   mode segur, ni fer servir memòries USB;
@@ -71,7 +71,12 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
 
             for (restriccio in restriccions(context)) gestor.addUserRestriction(admin, restriccio)
             gestor.setAutoTimeEnabled(admin, true)
-            for (paquet in APPS_AMAGADES) gestor.setApplicationHidden(admin, paquet, true)
+            // Ajustos: primer provem d'amagar-los; si el sistema no ho permet, els suspenem
+            // (en obrir-los surt un avís en lloc de l'app).
+            gestor.setShortSupportMessage(admin, context.getString(R.string.avis_bloquejat))
+            for (paquet in APPS_BLOQUEJADES) gestor.setApplicationHidden(admin, paquet, true)
+            appsSenseBloquejar = gestor.setPackagesSuspended(admin, APPS_BLOQUEJADES.toTypedArray(), true)
+                .toList()
             return true
         }
 
@@ -84,8 +89,14 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
             for (restriccio in RESTRICCIONS + RESTRICCIONS_DEFINITIVA) {
                 gestor.clearUserRestriction(admin, restriccio)
             }
-            for (paquet in APPS_AMAGADES) gestor.setApplicationHidden(admin, paquet, false)
+            gestor.setPackagesSuspended(admin, APPS_BLOQUEJADES.toTypedArray(), false)
+            for (paquet in APPS_BLOQUEJADES) gestor.setApplicationHidden(admin, paquet, false)
+            gestor.setShortSupportMessage(admin, null)
         }
+
+        /** Apps que no s'han pogut bloquejar l'última vegada (per a la línia de proves). */
+        var appsSenseBloquejar: List<String> = emptyList()
+            private set
 
         /**
          * Si som Device Owner, ens concedim el permís indicat nosaltres mateixos.
@@ -129,7 +140,7 @@ class AdministradorDispositiu : DeviceAdminReceiver() {
         )
 
         /** Apps del sistema que el nen no ha de poder obrir. */
-        private val APPS_AMAGADES = listOf(
+        private val APPS_BLOQUEJADES = listOf(
             "com.android.settings"  // Ajustos
         )
     }

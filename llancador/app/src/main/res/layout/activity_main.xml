@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Pantalla d'inici: fons de color, hora i data, apps permeses, 112 i «Com funciona». -->
+<!-- Pantalla d'inici: fons de color, hora i data, apps permeses i «Com funciona». -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -67,30 +67,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-        <!-- Botó d'emergència: separat de les apps perquè no es premi sense voler. -->
-        <TextView
-            android:id="@+id/boto_112"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/fons_boto_112"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="8dp"
-            android:text="@string/boto_112"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
         <TextView
             android:id="@+id/enllac_com_funciona"
             style="@style/TextSobreFons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:background="?attr/selectableItemBackground"
             android:padding="6dp"
             android:text="@string/enllac_com_funciona"
