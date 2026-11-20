@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Pantalla d'inici: fons de color, hora i data, i la graella d'apps. -->
+<!-- Pantalla d'inici: fons de color, hora i data, apps permeses i «Com funciona». -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="12dp">
 
         <TextClock
             android:id="@+id/hora"
@@ -21,10 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-light"
             android:format12Hour="HH:mm"
             android:format24Hour="HH:mm"
-            android:textSize="80sp"
-            android:fontFamily="sans-serif-light" />
+            android:textSize="80sp" />
 
         <TextClock
             android:id="@+id/data"
@@ -36,102 +38,91 @@
             android:format24Hour="EEEE d MMMM"
             android:textSize="20sp" />
 
+        <!-- Només surt al mode nit. -->
+        <TextView
+            android:id="@+id/text_mode_nit"
+            style="@style/TextSobreFons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/fons_avis_nit"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="Mode nit fins a les 07:00"
+            tools:visibility="visible" />
+
         <!-- Espai buit perquè les apps quedin a baix, a l'abast del polze. -->
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- Fila d'apps permeses: 4 caselles iguals, omplertes d'esquerra a dreta. -->
+        <!-- Apps permeses: el codi hi afegeix files de 4 caselles (element_app). -->
         <LinearLayout
             android:id="@+id/graella_apps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:orientation="vertical" />
 
-            <LinearLayout
-                android:id="@+id/app_telefon"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingVertical="8dp">
-
-                <ImageView
-                    android:layout_width="@dimen/mida_icona_app"
-                    android:layout_height="@dimen/mida_icona_app"
-                    android:background="@drawable/fons_icona_telefon"
-                    android:contentDescription="@null"
-                    android:padding="14dp"
-                    android:src="@drawable/ic_telefon" />
-
-                <TextView
-                    style="@style/TextSobreFons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/app_telefon"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/app_llanterna"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingVertical="8dp">
-
-                <ImageView
-                    android:id="@+id/icona_llanterna"
-                    android:layout_width="@dimen/mida_icona_app"
-                    android:layout_height="@dimen/mida_icona_app"
-                    android:background="@drawable/fons_icona_llanterna"
-                    android:contentDescription="@null"
-                    android:padding="14dp"
-                    android:src="@drawable/ic_llanterna" />
-
-                <TextView
-                    style="@style/TextSobreFons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/app_llanterna"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Només en versions de desenvolupament (ho decideix el codi). -->
         <TextView
-            android:id="@+id/text_estat"
+            android:id="@+id/enllac_com_funciona"
             style="@style/TextSobreFons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:visibility="gone"
-            tools:text="@string/estat_propietari_no"
-            tools:visibility="visible" />
+            android:layout_marginTop="20dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="6dp"
+            android:text="@string/enllac_com_funciona"
+            android:textSize="13sp" />
 
-        <Button
-            android:id="@+id/boto_treure_propietari"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
+        <!-- Només en versions de desenvolupament (ho decideix el codi). -->
+        <LinearLayout
+            android:id="@+id/grup_proves"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/boto_treure_propietari"
-            android:textColor="@android:color/white"
-            android:visibility="gone" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/text_estat"
+                style="@style/TextSobreFons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="11sp"
+                tools:text="Proves: mòbil gestionat · filtre actiu · sortints actiu" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/boto_mode_nit"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/boto_mode_horari"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/boto_treure_propietari"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/boto_treure_propietari"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

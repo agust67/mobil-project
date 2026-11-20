@@ -1,18 +1,60 @@
 <resources>
     <string name="app_name">Llançador</string>
+
+    <!-- Apps de l'inici -->
     <string name="app_telefon">Telèfon</string>
+    <string name="app_llanterna">Llanterna</string>
+    <string name="app_rellotge">Rellotge</string>
+    <string name="app_calculadora">Calculadora</string>
+    <string name="app_camera">Càmera</string>
+    <string name="app_no_disponible">Aquesta app no està disponible.</string>
+    <string name="sense_llanterna">Aquest mòbil no té llanterna.</string>
+
+    <!-- Mode nit -->
+    <string name="mode_nit_fins">Mode nit fins a les %1$s</string>
+
+    <!-- Emergència -->
+    <string name="tile_112">112</string>
+    <string name="emergencia_titol">Emergència</string>
+    <string name="emergencia_pregunta">Vols trucar al 112?</string>
+    <string name="emergencia_trucar">Trucar</string>
+    <string name="emergencia_cancellar">No</string>
+
+    <!-- Contactes -->
     <string name="titol_contactes">Contactes</string>
     <string name="boto_trucar">Trucar a %1$s</string>
     <string name="boto_xat">Escriure a %1$s</string>
     <string name="xat_no_disponible">El xat encara no està a punt.</string>
-    <string name="sense_contactes">No hi ha cap contacte configurat.</string>
+    <string name="sense_contactes">Ara no hi ha cap contacte disponible.</string>
     <string name="sense_permis_trucar">No es pot trucar: falta el permís de trucades.</string>
-    <string name="app_llanterna">Llanterna</string>
-    <string name="sense_llanterna">Aquest mòbil no té llanterna.</string>
-    <string name="estat_proves">Proves: %1$s · %2$s</string>
+
+    <!-- Com funciona el meu mòbil -->
+    <string name="enllac_com_funciona">Mòbil gestionat per la família · Com funciona</string>
+    <string name="titol_com_funciona">Com funciona el meu mòbil</string>
+    <string name="cf_introduccio">Aquest mòbil té unes normes que han posat els teus pares. Aquí les tens totes, perquè sàpigues com funciona.</string>
+    <string name="cf_trucades_titol">Trucades</string>
+    <string name="cf_trucades_text">Pots trucar i rebre trucades dels teus contactes: %1$s. Les trucades d\'altres números es pengen soles, sense sonar.</string>
+    <string name="cf_nit_titol">Mode nit</string>
+    <string name="cf_nit_text">De %1$s a %2$s el mòbil descansa: només pots fer servir el Telèfon, la Llanterna i el Rellotge, i només pots parlar amb: %3$s.</string>
+    <string name="cf_apps_titol">Apps</string>
+    <string name="cf_apps_text">Només hi ha les apps de la pantalla d\'inici. No es poden instal·lar apps noves ni canviar els ajustos importants del mòbil (wifi, dades, Bluetooth, ubicació, hora).</string>
+    <string name="cf_emergencia_titol">Emergències</string>
+    <string name="cf_emergencia_text">Si llisques des de dalt de la pantalla, hi ha el botó 112. Funciona sempre, a qualsevol hora, fins i tot amb el mòbil bloquejat. Fes-lo servir només si hi ha una emergència de veritat.</string>
+    <string name="cf_ubicacio_titol">Ubicació</string>
+    <string name="cf_ubicacio_text">La teva família pot saber on és el mòbil, per si et passa alguna cosa.</string>
+    <string name="cf_normes_titol">Si vols canviar alguna cosa</string>
+    <string name="cf_normes_text">Les normes les decideixen els teus pares i es canvien des de casa. Si vols afegir un contacte o canviar alguna cosa, parla-ho amb ells.</string>
+
+    <!-- Només per a proves -->
+    <string name="estat_proves">Proves: %1$s · %2$s · %3$s</string>
     <string name="estat_propietari_si">mòbil gestionat</string>
     <string name="estat_propietari_no">mòbil no gestionat</string>
-    <string name="estat_filtre_si">filtre de trucades actiu</string>
-    <string name="estat_filtre_no">filtre de trucades inactiu</string>
-    <string name="boto_treure_propietari">Proves: deixar de gestionar el mòbil</string>
+    <string name="estat_filtre_si">filtre entrants actiu</string>
+    <string name="estat_filtre_no">filtre entrants inactiu</string>
+    <string name="estat_sortints_si">control sortints actiu</string>
+    <string name="estat_sortints_no">control sortints inactiu</string>
+    <string name="boto_treure_propietari">Deixar de gestionar</string>
+    <string name="boto_mode_horari">Mode: segons horari</string>
+    <string name="boto_mode_nit_forcat">Mode: nit (forçat)</string>
+    <string name="boto_mode_dia_forcat">Mode: dia (forçat)</string>
 </resources>

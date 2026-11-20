@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- «Com funciona el meu mòbil»: normes explicades al nen. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/com_funciona"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fons_llista"
+    tools:context=".ComFuncionaActivity">
+
+    <LinearLayout
+        android:id="@+id/contingut_com_funciona"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/titol_com_funciona"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/cf_introduccio"
+            android:textColor="#FFDDDDE4"
+            android:textSize="17sp" />
+        <!-- El codi hi afegeix els apartats. -->
+    </LinearLayout>
+</ScrollView>

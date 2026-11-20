@@ -24,7 +24,8 @@ import androidx.core.view.WindowInsetsCompat
  * Pantalla Telèfon: la llista de contactes permesos.
  *
  * Cada fila té un cercle amb la inicial, el nom i, a la dreta, un botó per
- * trucar i un per escriure (el xat encara no està fet). Es truca directament,
+ * trucar i un per escriure (el xat encara no està fet). Al mode nit només
+ * surten els contactes dels grups permesos de nit. Es truca directament,
  * sense passar per l'app de Telèfon, perquè no es pugui marcar cap altre número.
  */
 class ContactesActivity : AppCompatActivity() {
@@ -60,7 +61,12 @@ class ContactesActivity : AppCompatActivity() {
         }
 
         llista = findViewById(R.id.llista_contactes)
-        mostrarContactes(Configuracio.llegir(this).contactes)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Al mode nit només surten els contactes permesos de nit.
+        mostrarContactes(Normes.contactesDisponibles(Configuracio.llegir(this)))
     }
 
     /** Crea una fila per a cada contacte permès. */
