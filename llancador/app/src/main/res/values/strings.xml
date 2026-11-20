@@ -37,19 +37,16 @@
     <string name="cf_nit_titol">Mode nit</string>
     <string name="cf_nit_text">De %1$s a %2$s el mòbil descansa: només pots fer servir el Telèfon, la Llanterna i el Rellotge, i només pots parlar amb: %3$s.</string>
     <string name="cf_apps_titol">Apps</string>
-    <string name="cf_apps_text">Només hi ha les apps de la pantalla d\'inici. No es poden instal·lar apps noves ni canviar els ajustos del mòbil (wifi, dades, Bluetooth, hora).</string>
+    <string name="cf_apps_text">Només hi ha les apps de la pantalla d\'inici. No es poden instal·lar apps noves ni canviar els ajustos importants del mòbil (wifi, dades, Bluetooth, ubicació, hora).</string>
     <string name="cf_emergencia_titol">Emergències</string>
     <string name="cf_emergencia_text">Si llisques des de dalt de la pantalla, hi ha el botó 112. Funciona sempre, a qualsevol hora, fins i tot amb el mòbil bloquejat. Fes-lo servir només si hi ha una emergència de veritat.</string>
-    <string name="avis_bloquejat">Aquesta opció la controlen els teus pares.</string>
     <string name="cf_ubicacio_titol">Ubicació</string>
     <string name="cf_ubicacio_text">La teva família pot saber on és el mòbil, per si et passa alguna cosa.</string>
     <string name="cf_normes_titol">Si vols canviar alguna cosa</string>
     <string name="cf_normes_text">Les normes les decideixen els teus pares i es canvien des de casa. Si vols afegir un contacte o canviar alguna cosa, parla-ho amb ells.</string>
 
     <!-- Només per a proves -->
-    <string name="estat_proves">Proves: %1$s · %2$s · %3$s · %4$s</string>
-    <string name="estat_ajustos_si">Ajustos bloquejats</string>
-    <string name="estat_ajustos_no">Ajustos oberts</string>
+    <string name="estat_proves">Proves: %1$s · %2$s · %3$s</string>
     <string name="estat_propietari_si">mòbil gestionat</string>
     <string name="estat_propietari_no">mòbil no gestionat</string>
     <string name="estat_filtre_si">filtre entrants actiu</string>

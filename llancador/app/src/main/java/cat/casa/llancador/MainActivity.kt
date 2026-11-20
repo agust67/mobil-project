@@ -285,13 +285,6 @@ class MainActivity : AppCompatActivity() {
             getString(
                 if (tenimRol(RoleManager.ROLE_CALL_REDIRECTION)) R.string.estat_sortints_si
                 else R.string.estat_sortints_no
-            ),
-            getString(
-                if (somPropietaris && AdministradorDispositiu.appsSenseBloquejar.isEmpty()) {
-                    R.string.estat_ajustos_si
-                } else {
-                    R.string.estat_ajustos_no
-                }
             )
         )
         botoTreure.visibility = if (somPropietaris) View.VISIBLE else View.GONE
