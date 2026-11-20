@@ -7,7 +7,12 @@
     <string name="xat_no_disponible">El xat encara no està a punt.</string>
     <string name="sense_contactes">No hi ha cap contacte configurat.</string>
     <string name="sense_permis_trucar">No es pot trucar: falta el permís de trucades.</string>
-    <string name="estat_propietari_si">Proves: mòbil gestionat (Device Owner actiu).</string>
-    <string name="estat_propietari_no">Proves: mòbil encara no gestionat.</string>
+    <string name="app_llanterna">Llanterna</string>
+    <string name="sense_llanterna">Aquest mòbil no té llanterna.</string>
+    <string name="estat_proves">Proves: %1$s · %2$s</string>
+    <string name="estat_propietari_si">mòbil gestionat</string>
+    <string name="estat_propietari_no">mòbil no gestionat</string>
+    <string name="estat_filtre_si">filtre de trucades actiu</string>
+    <string name="estat_filtre_no">filtre de trucades inactiu</string>
     <string name="boto_treure_propietari">Proves: deixar de gestionar el mòbil</string>
 </resources>

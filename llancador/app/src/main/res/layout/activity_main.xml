@@ -42,18 +42,19 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- Graella d'apps permeses: 4 per fila. -->
-        <GridLayout
+        <!-- Fila d'apps permeses: 4 caselles iguals, omplertes d'esquerra a dreta. -->
+        <LinearLayout
             android:id="@+id/graella_apps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="4">
+            android:orientation="horizontal"
+            android:weightSum="4">
 
             <LinearLayout
                 android:id="@+id/app_telefon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
@@ -77,7 +78,37 @@
                     android:text="@string/app_telefon"
                     android:textSize="14sp" />
             </LinearLayout>
-        </GridLayout>
+
+            <LinearLayout
+                android:id="@+id/app_llanterna"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/icona_llanterna"
+                    android:layout_width="@dimen/mida_icona_app"
+                    android:layout_height="@dimen/mida_icona_app"
+                    android:background="@drawable/fons_icona_llanterna"
+                    android:contentDescription="@null"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_llanterna" />
+
+                <TextView
+                    style="@style/TextSobreFons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/app_llanterna"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- Només en versions de desenvolupament (ho decideix el codi). -->
         <TextView
