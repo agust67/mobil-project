@@ -133,8 +133,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, ComFuncionaActivity::class.java))
         }
         botoTreure.setOnClickListener { deixarDeSerPropietari() }
+        // Proves: cada toc passa per segons l'horari → forçar nit → forçar dia → ...
         botoModeNit.setOnClickListener {
-            Normes.forcarModeNit = !Normes.forcarModeNit
+            Normes.forcarModeNit = when (Normes.forcarModeNit) {
+                null -> true
+                true -> false
+                false -> null
+            }
             mostrarApps()
             mostrarEstat()
         }
@@ -278,7 +283,11 @@ class MainActivity : AppCompatActivity() {
         )
         botoTreure.visibility = if (somPropietaris) View.VISIBLE else View.GONE
         botoModeNit.setText(
-            if (Normes.forcarModeNit) R.string.boto_mode_nit_treure else R.string.boto_mode_nit_forcar
+            when (Normes.forcarModeNit) {
+                null -> R.string.boto_mode_horari
+                true -> R.string.boto_mode_nit_forcat
+                false -> R.string.boto_mode_dia_forcat
+            }
         )
     }
 

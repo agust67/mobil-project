@@ -13,12 +13,15 @@ object Normes {
     /** País per comparar números escrits amb o sense +34. */
     private const val PAIS = "es"
 
-    /** Només per a proves: força el mode nit encara que no sigui l'hora. */
-    var forcarModeNit = false
+    /**
+     * Només per a proves: null segueix l'horari; cert força el mode nit;
+     * fals força el mode dia.
+     */
+    var forcarModeNit: Boolean? = null
 
     /** Cert si ara mateix és l'horari del mode nit. */
     fun modeNitActiu(config: Configuracio, ara: LocalTime = LocalTime.now()): Boolean {
-        if (forcarModeNit) return true
+        forcarModeNit?.let { return it }
         val nit = config.modeNit ?: return false
         return if (nit.inici <= nit.fi) {
             ara >= nit.inici && ara < nit.fi

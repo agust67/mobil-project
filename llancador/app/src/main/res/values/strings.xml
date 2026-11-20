@@ -54,6 +54,7 @@
     <string name="estat_sortints_si">control sortints actiu</string>
     <string name="estat_sortints_no">control sortints inactiu</string>
     <string name="boto_treure_propietari">Deixar de gestionar</string>
-    <string name="boto_mode_nit_forcar">Provar mode nit</string>
-    <string name="boto_mode_nit_treure">Treure mode nit</string>
+    <string name="boto_mode_horari">Mode: segons horari</string>
+    <string name="boto_mode_nit_forcat">Mode: nit (forçat)</string>
+    <string name="boto_mode_dia_forcat">Mode: dia (forçat)</string>
 </resources>
